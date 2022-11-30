@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 from pygame.locals import *
 
@@ -29,6 +30,11 @@ class Snake:
 
     def move_left(self):
         self.direction = 'left'
+
+    def increase_length(self):
+        self.length +=1
+        self.x.append(-1)
+        self.y.append(-1)
  
     def walk(self):
         for i in range(self.length-1,0,-1):
@@ -44,17 +50,45 @@ class Snake:
             self.x[0] -= SIZE
         self.draw()
 
+class Food:
+    def __init__(self,parent_screen):
+        self.food = pygame.image.load("resources/apple.jpg").convert()
+        self.parent_screen = parent_screen
+        self.x,self.y = SIZE *3,SIZE *3
 
+    def draw(self):
+        self.parent_screen.blit(self.food,(self.x,self.y))
+        pygame.display.flip()
 
+    def move(self):
+        self.x = random.randint(1,25) * SIZE
+        self.y = random.randint(1,25) * SIZE
 
 class Game:
     def __init__(self):
         pygame.init()
         # initialize the screen
-        self.surface = pygame.display.set_mode((1200,500))
+        self.surface = pygame.display.set_mode((1000,800))
         self.surface.fill((100,100,5))
-        self.snake = Snake(self.surface,3)
+        self.snake = Snake(self.surface,1)
         self.snake.draw()
+        self.food = Food(self.surface)
+        self.food.draw()
+
+    def is_collision(self, x1, y1, x2, y2):
+        if x1 >= x2 and x1 <= x2 + SIZE:
+            if y1 >= y2 and y1 <= y2 + SIZE:
+                return True
+            return False
+
+    def play(self):
+        self.snake.walk()
+        self.food.draw()
+        if self.is_collision(self.snake.x[0],self.snake.y[0],self.food.x,self.food.y):
+            self.snake.increase_length()
+            self.food.move()
+            
+
     def run(self):
         running= True
         while running:
@@ -72,7 +106,7 @@ class Game:
                         self.snake.move_right()
                 elif event.type == QUIT:
                     running = False
-            self.snake.walk()
+            self.play()
             time.sleep(0.2)
 
 
