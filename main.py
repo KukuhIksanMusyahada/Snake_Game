@@ -21,16 +21,20 @@ class Snake:
         pygame.display.flip()
     
     def move_up(self):
-        self.direction = 'up'
+        if self.direction != 'down':
+            self.direction = 'up'
 
     def move_down(self):
-        self.direction = 'down'
+        if self.direction != 'up':
+            self.direction = 'down'
 
     def move_right(self):
-        self.direction = 'right'
+        if self.direction != 'left':
+            self.direction = 'right'
 
     def move_left(self):
-        self.direction = 'left'
+        if self.direction != 'right':
+            self.direction = 'left'
 
     def increase_length(self):
         self.length +=1
@@ -53,7 +57,7 @@ class Snake:
 
 class Food:
     def __init__(self,parent_screen):
-        self.food = pygame.image.load("resources/apple.jpg").convert()
+        self.food = pygame.image.load("resources/block.jpg").convert()
         self.parent_screen = parent_screen
         self.x,self.y = SIZE *3,SIZE *3
 
