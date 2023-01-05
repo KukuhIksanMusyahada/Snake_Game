@@ -6,6 +6,9 @@ from pygame.locals import *
 
 SIZE = 40
 BACKGROUND_COLOR = (100,100,5)
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 800
+
 class Snake:
     def __init__(self,parent_screen, length):
         self.length = length
@@ -66,14 +69,14 @@ class Food:
         pygame.display.flip()
 
     def move(self):
-        self.x = random.randint(1,24) * SIZE
-        self.y = random.randint(1,19) * SIZE
+        self.x = random.randint(1,(SCREEN_WIDTH/SIZE)-2) * SIZE
+        self.y = random.randint(1,(SCREEN_HEIGHT/SIZE)-2) * SIZE
 
 class Game:
     def __init__(self):
         pygame.init()
         # initialize the screen
-        self.surface = pygame.display.set_mode((1000,800))
+        self.surface = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
         self.surface.fill(BACKGROUND_COLOR)
         self.snake = Snake(self.surface,1)
         self.snake.draw()
