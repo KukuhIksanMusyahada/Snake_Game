@@ -5,5 +5,5 @@ Fun Project (Creating Snake Game Using PyGame)
 - Understanding about logic flow and how to implement using python
 ## The result 
 <p align="center">
-  <img src="">
+  <img src="https://github.com/KukuhIksanMusyahada/Snake_Game/blob/main/snake.gif">
 </p>
